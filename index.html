@@ -1,0 +1,242 @@
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My first leaflet</title>
+
+<!-- link css leaflet -->
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+
+integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+
+crossorigin=""/>
+
+<!-- link js leaflet -->
+
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+
+integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+
+crossorigin=""></script>
+
+<style>
+
+body {
+
+padding: 0;
+
+margin: 0;
+
+}
+
+html,
+
+body,
+
+#map {
+
+height: 100%;
+
+width: 100%;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- แบ่งส่วนหน้าจอ -->
+
+<div id="map" style="width: 100%; height: 100%"></div>
+
+<script>
+
+//set view map
+
+var map = L.map('map').setView([17.0365, 100.4705], 10);
+
+//import based map
+
+
+var OSM = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+
+maxZoom: 18,
+
+attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
+
+}).addTo(map);
+
+var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+ maxZoom: 19,
+ attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+}).addTo(map);
+
+var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	maxZoom: 17,
+	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+}).addTo(map);
+
+var OPNVKarte = L.tileLayer('https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: 'Map <a href="https://memomaps.de/">memomaps.de</a> <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var OpenStreetMap_DE = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+var baseLayers = {
+
+"OSM" : OSM,
+
+"OpenStreetMap_HOT": OpenStreetMap_HOT,
+"OpenTopoMap": OpenTopoMap,
+"OPNVKarte": OPNVKarte,
+"OpenStreetMap_DE": OpenStreetMap_DE,
+}
+
+L.control.layers(baseLayers).addTo(map);
+
+//การเพิ่มข้อข้อมูลลงบนแผนที่
+
+var point = L.marker([17.0365, 100.4705],
+
+
+{
+
+draggable: true, // Make the icon dragable
+
+title: 'พิษณุโลก', // Add a title
+
+opacity: 1.5 // Adjust the opacity
+
+}
+
+).addTo(map);
+
+// การเพิ่มวงกลม
+
+// var point = L.circleMarker(
+
+// [17.0365, 100.4705],
+
+// {title :'พิษณุโลก',
+
+//  radius: 50,
+
+// color: "blue",
+
+// fillColor: "red"}
+
+// ).addTo(map);
+
+//และข้อมูลลงในแผนที่
+
+point.bindPopup("<b>พิษณุโลก</b><br>ภาคกลาง")
+
+.openPopup();
+
+//แสดงข้อมูลหลายจุด
+
+var swu = [
+
+// ["Faculty of Humanities", 13.747068507702805, 100.56527196576859],
+
+// ["Faculty of Socail Sciences", 13.744517046460741, 100.56397426787937],
+
+// ["Grad school", 13.743816164487734, 100.56402242897477],
+
+// ["Post office", 13.746488112796877, 100.56510554978775],
+
+// ["Canteen", 13.744359892491058, 100.56640407260664],
+
+["บ้านสวนชมวิว ต้นไม้หัวใจ", 16.72583, 100.62577],
+
+["น้ำตกแก่งโสภา',", 16.87199, 100.83512],
+
+["อุทยานแห่งชาติภูหินร่องกล้า", 17.00421, 100.99416],
+
+["น้ำตกแก่งซอง'", 16.86682, 100.63178],
+
+["ศาลหลักเมืองพิษณุโลก", 16.82461, 100.25982],
+
+["วัดพระศรีรัตนมหาธาตุวรมหาวิหาร", 16.72583, 100.26208],
+
+["ล่องแพแก่งไฮ", 16.82405, 100.75251],
+
+["เขาร่องเรือตาหมื่น", 16.57918, 100.71030],
+
+["อุทยานแห่งชาติน้ำตกชาติตระการ'", 17.29797, 100.68327],
+
+["พิพิธภัณฑ์พื้นบ้านจ่าทวี", 16.80614, 100.26747],
+
+];
+
+//เปลี่ยน icon
+
+var greenIcon = L.icon({ iconUrl: 'https://cdn-icons-png.flaticon.com/128/15932/15932901.png',
+
+iconSize: [40, 60], // size of the icon
+
+shadowSize: [50, 50], // size of the shadow
+
+iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+
+shadowAnchor: [4, 62], // the same for the shadow
+
+popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+});
+
+for (var i = 0; i < swu.length; i++) {
+
+marker = new L.marker([swu[i][1], swu[i][2]], {icon: greenIcon})
+
+.bindPopup(swu[i][0])
+
+.addTo(map);
+
+}
+
+//description/Legend
+var legend = L.control({position: "bottomright"});
+legend.onAdd = function(map) {
+var div = L.DomUtil.create("div", "legend");
+div.innerHTML =
+'<p><b>Srinakharinwirot university</b></p><hr>' +
+'Created by Thanattcha Pompongkan<br>' +
+'ID: 64103010287<br>'+
+'<img src="https://unity.swu.ac.th/wp-content/uploads/2020/07/SWU_Logo_EN_Color.png" width = 20%>';
+return div;
+
+};
+var legendd = L.control({position: "bottomleft"});
+legendd.onAdd = function(map) {
+var div = L.DomUtil.create("div", "legendd");
+div.innerHTML =
+'<b>คำอธิบายสัญลักษณ์</b><hr>' +
+'<img src="https://cdn-icons-png.flaticon.com/128/15932/15932901.png" width = 30%>'+
+'<p style="display:inline-block; vertical-align:middle;">สถานที่ท่องเที่ยว</p>'
+
+return div;
+}; 
+
+legend.addTo(map);
+legendd.addTo(map);
+
+
+</script>
+
+</body>
+
+</html>
